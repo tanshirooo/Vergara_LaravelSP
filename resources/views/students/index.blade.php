@@ -21,15 +21,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Vergara, Christian Paul</td>
-                    <td>Bachelor of Science in Information Technology</td>
-                    <td>2</td>
-                    <td>
-                        <a href="{{ url('/students/1') }}" class="btn btn-sm btn-primary">View</a>
-                        <a href="{{ url('/students/2/edit') }}" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
+                {{-- 10 Manual Students --}}
+                <tr><td>Vergara, Christian Paul</td><td>Bachelor of Science in Information Technology</td><td>2</td><td><x-actions :student="(object)['id' => 1]" /></td></tr>
+                <tr><td>Dela Cruz, Juan</td><td>Bachelor of Science in Computer Science</td><td>1</td><td><x-actions :student="(object)['id' => 2]" /></td></tr>
+                <tr><td>Santos, Maria Clara</td><td>Bachelor of Science in Information Systems</td><td>3</td><td><x-actions :student="(object)['id' => 3]" /></td></tr>
+                <tr><td>Reyes, Ricardo</td><td>Bachelor of Science in Information Technology</td><td>4</td><td><x-actions :student="(object)['id' => 4]" /></td></tr>
+                <tr><td>Luna, Antonio</td><td>Bachelor of Science in Computer Science</td><td>2</td><td><x-actions :student="(object)['id' => 5]" /></td></tr>
+                <tr><td>Silang, Gabriela</td><td>Bachelor of Science in Information Technology</td><td>1</td><td><x-actions :student="(object)['id' => 6]" /></td></tr>
+                <tr><td>Aquino, Melchora</td><td>Bachelor of Science in Information Systems</td><td>4</td><td><x-actions :student="(object)['id' => 7]" /></td></tr>
+                <tr><td>Mabini, Apolinario</td><td>Bachelor of Science in Computer Science</td><td>3</td><td><x-actions :student="(object)['id' => 8]" /></td></tr>
+                <tr><td>Rizal, Jose</td><td>Bachelor of Science in Information Technology</td><td>2</td><td><x-actions :student="(object)['id' => 9]" /></td></tr>
+                <tr><td>Bonifacio, Andres</td><td>Bachelor of Science in Computer Science</td><td>1</td><td><x-actions :student="(object)['id' => 10]" /></td></tr>
             </tbody>
         </table>
 
@@ -39,14 +41,15 @@
             (function() {
                 const input = document.getElementById('studentSearch');
                 const table = document.querySelector('table.table tbody');
-                const rows = Array.from(table.querySelectorAll('tr'));
                 const noResults = document.getElementById('noResults');
 
                 function normalize(s){ return (s||'').toString().toLowerCase().trim(); }
 
                 function filter() {
                     const q = normalize(input.value);
+                    const rows = Array.from(table.querySelectorAll('tr'));
                     let visible = 0;
+
                     rows.forEach(r => {
                         const text = normalize(r.innerText);
                         if (!q || text.indexOf(q) !== -1) {
@@ -56,11 +59,10 @@
                             r.style.display = 'none';
                         }
                     });
-                    noResults.style.display = visible ? 'none' : '';
+                    noResults.style.display = (visible === 0 && q !== '') ? '' : 'none';
                 }
 
                 input.addEventListener('input', filter);
-                // optional: allow clearing with Escape
                 input.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ input.value=''; filter(); }});
             })();
         </script>
